@@ -52,6 +52,11 @@ public class KeycloakAuthentication extends AbstractAuthenticationToken  {
 				roles.add(new GrantedAuthorityImpl(role));
 			}
 		}
+		if(accessToken != null && accessToken.getOtherClaims().containsKey("roles")) {
+			for(String role : (List<String>) accessToken.getOtherClaims().get("roles")) {
+				roles.add(new GrantedAuthorityImpl(role));
+			}
+		}
 		roles.add(SecurityRealm.AUTHENTICATED_AUTHORITY);
 		return roles.toArray(new GrantedAuthority[roles.size()]);
 	}
